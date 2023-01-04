@@ -1,12 +1,8 @@
 from ossapi import Ossapi
+from Song import Song
 
 #set the API key
 api = Ossapi("f320af2b16dbfcb597973d754e1ca39dabeaf7ab")
-
-class Song :
-   def __init__(self, title, artist):
-      self.title = title
-      self.artist = artist
 #method for pulling top plays from a users profile
 #@param username: player userid, aka the number in your profile link
 def pullTopPlays(userid):
