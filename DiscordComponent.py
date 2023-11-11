@@ -26,4 +26,4 @@ async def create_playlist(interaction: discord.Interaction, username: str):
    TopPlayGrabber.pullTopPlays(username)
    
 
-bot.run('MTA4NDAxNTE0MzE0ODU4NTAyMA.GoJaFN.fQVLfITpOwDpcYfrGhYwa7GAGAnxwj4xSyF4ag')
+bot.run(os.getenv('DISCORD_API'))
