@@ -2,9 +2,10 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from ossapi import OssapiV1
+import os
 import TopPlayGrabber
 
-api = OssapiV1("f320af2b16dbfcb597973d754e1ca39dabeaf7ab")
+api = OssapiV1(os.getenv('OSU_CLIENT'))
 
 bot = commands.Bot(command_prefix="?", intents = discord.Intents.all())
 

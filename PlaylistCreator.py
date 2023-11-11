@@ -7,7 +7,7 @@ from datetime import date
 
 
 scope = 'playlist-modify-public'
-username = 'lzi4ujnks79g6pfjqc7zrqu2d'
+username = os.getenv("SPOT_NAME")
 
 
 token = SpotifyOAuth(scope=scope, username=username)
