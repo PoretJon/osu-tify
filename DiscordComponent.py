@@ -28,6 +28,7 @@ async def create_playlist(interaction: discord.Interaction, username: str):
    msg = await interaction.response.send_message(f"{username}, Pulling top plays!", ephemeral=False)
    songs = TopPlayGrabber.pullTopPlays(username)
    spotComp = PlaylistCreator.SpotifyComponent()
+   spotComp.create_playlist(songs,username)
    #TODO: Add handling of incorrect/nonexistant usernames
    # if songs == None:
    #    await interaction.followup("No plays found. Maybe the wrong username was given?")

@@ -31,13 +31,22 @@ class SpotifyComponent():
             song = result['tracks']['items'][0]['uri']
             self.spotifyClient.add_to_queue(song)
 
-    def create_playlist(self,songs):
-         for song in songs:
+    def create_playlist(self,songs, osu_user):
+        playlist_name = osu_user,"top plays"
+        playlist_desc = "top plays of osu! user",osu_user
+        self.spotifyClient.user_playlist_create(user=self.username,name=playlist_name,description=playlist_desc,public=True)
+        play = self.spotifyClient.user_playlists(user=self.username)
+        playlist = play['items'][0]['id'] 
+        song_ids = []
+        # TODO: this above is stupid.
+        for song in songs:
             print("Adding", song.title, "to playlist")
             result = self.spotifyClient.search(q=(str(song.artist,song.track)))
             if len(result) < 1:
                 print("couldnt find song, skipping")
                 continue
             song = result['tracks']['items'][0]['uri']
+            song_ids.append(song)
+        self.spotifyClient.user_playlist_add_tracks(user=self.username,playlist_id=playlist,tracks=song_ids)
 
 
