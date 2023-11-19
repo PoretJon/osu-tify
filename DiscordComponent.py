@@ -2,17 +2,20 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from ossapi import OssapiV1
-import os
+from os import getenv
 import TopPlayGrabber
+import PlaylistCreator
+from dotenv import load_dotenv
 
-api = OssapiV1(os.getenv('OSU_CLIENT'))
+load_dotenv()
+
 
 bot = commands.Bot(command_prefix="?", intents = discord.Intents.all())
 
 
 @bot.event
-async def on_ready(self):
-   print(f"Logged in as {self.user}")
+async def on_ready():
+   print("bot is logged in!")
    try:
       synced = await bot.tree.sync()
       print(f"Synced {len(synced)} commands!")
@@ -22,8 +25,12 @@ async def on_ready(self):
 @bot.tree.command(name="create_playlist")
 @app_commands.describe(username="Your osu! username")
 async def create_playlist(interaction: discord.Interaction, username: str):
-   await interaction.response.send_message(f"{username}, Pulling top plays!", ephemeral=False)
-   TopPlayGrabber.pullTopPlays(username)
+   msg = await interaction.response.send_message(f"{username}, Pulling top plays!", ephemeral=False)
+   songs = TopPlayGrabber.pullTopPlays(username)
+   spotComp = PlaylistCreator.SpotifyComponent()
+   #TODO: Add handling of incorrect/nonexistant usernames
+   # if songs == None:
+   #    await interaction.followup("No plays found. Maybe the wrong username was given?")
    
 
-bot.run(os.getenv('DISCORD_API'))
+bot.run(getenv('DISCORD_API'))
